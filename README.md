@@ -69,7 +69,7 @@ git add <files>
 git rm --cache <staged_files> # used to unstage files
 ```
 
-after staging files, we new could commit!
+after staging files, we now could commit!
 
 - `-m` add commit message
 
@@ -83,6 +83,12 @@ git log # show logs to check previous commits
 ## Push
 
 Since our local repo has no any information of remote repo, thus we have to set the upstream to let git know where to push
+
+```bash
+git branch --set-upstream-to <remote_repo> <remote_branch>
+git branch --unset-upstream
+```
+or just push with upstream
 
 ```bash
 git push -u <remote_repo> <remote_branch>
