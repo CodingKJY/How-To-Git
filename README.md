@@ -85,11 +85,55 @@ git log # show logs to check previous commits
 Since our local repo has no any information of remote repo, thus we have to set the upstream to let git know where to push
 
 ```bash
-git branch --set-upstream-to <remote_repo> <remote_branch>
-git branch --unset-upstream
-```
-or just push with upstream
-
-```bash
 git push -u <remote_repo> <remote_branch>
 ```
+
+## Fetch Remote updates
+
+Sometimes we work as asynchronous, maybe remote repo has updates
+
+```bash
+git remote update
+git status
+```
+
+here we will get the updates information of remote repo, next we could pull the updates to local repo by fetch
+
+```bash
+git fetch <remote_repo> <remote_branch> # will store in FETCH_HEAD
+git diff master FETCH_HEAD # compare changes with your local head (master)
+git merge <remote_repo>/<remote_branch>
+```
+
+or just use git pull to perform fetch and merge
+
+### Conflict files!
+
+Now we had modified some code (not commit yet) and we’re going to pull remote updates to local
+
+```bash
+git remote update
+git pull # it will show error message
+```
+
+There’re several ways to go through this error
+
+- stash current working status
+    
+    ```bash
+    git stash # stash all unstaged files
+    git stash -m "stash info" # you can add stash message by option -m
+    git stash list # check stash list
+    ```
+    
+    After stash we could merge local with fetch data
+    
+    ```bash
+    git fetch origin master
+    git merge
+    git stash pop
+    ```
+    
+    Now we can see conflicts marked between `<<<<<<< Updated upstream`, `=======`, and `>>>>>>> Stashed changes`
+    
+    Resolving them by editor, commit and push
